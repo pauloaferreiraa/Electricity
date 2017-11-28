@@ -17,7 +17,7 @@ public class Main extends Application {
         launch(args);
         ReadData rd = new ReadData();
         Map<String,Double> medias = rd.getMediaDia();
-        for(String s : medias.keySet()){
+        /*for(String s : medias.keySet()){
             System.out.println(s+"   :"+ medias.get(s));
         }
 
@@ -25,7 +25,7 @@ public class Main extends Application {
         Map<String,Double> desvio = rd.getDesvioDia();
         for(String s : desvio.keySet()){
             System.out.println(s+"   :"+ desvio.get(s));
-        }/*
+        }
         System.out.println("-------------------------------");
         Map<String,Double> mediaM = rd.getMediaMes();
         for(String s : mediaM.keySet()){

@@ -79,8 +79,8 @@ public class GUIController {
             seriesMeanDays.getData().add(new XYChart.Data(s, medias.get(s)));
         }
 
-        for(String s : desvio.keySet()){
-            seriesStdDevDays.getData().add(new XYChart.Data(s, medias.get(s)));
+        for(String st : desvio.keySet()){
+            seriesStdDevDays.getData().add(new XYChart.Data(st, desvio.get(st)));
         }
         seriesMeanDays.setName("Média");
         seriesStdDevDays.setName("Desvio Padrão");
