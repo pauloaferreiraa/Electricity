@@ -1,9 +1,12 @@
+package Code;
+
 import GUI.GUIController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import java.util.Map;
 
 public class Main extends Application {
@@ -22,7 +25,7 @@ public class Main extends Application {
         Map<String,Double> desvio = rd.getDesvioDia();
         for(String s : desvio.keySet()){
             System.out.println(s+"   :"+ desvio.get(s));
-        }
+        }/*
         System.out.println("-------------------------------");
         Map<String,Double> mediaM = rd.getMediaMes();
         for(String s : mediaM.keySet()){
@@ -33,15 +36,15 @@ public class Main extends Application {
         Map<String,Double> desvioM = rd.getDesvioMes();
         for(String s : desvioM.keySet()){
             System.out.println(s+"   :"+ desvioM.get(s));
-        }
+        }*/
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("GUI/MainWindow.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainWindow.fxml"));
         Scene scene = new Scene(root);
-
         primaryStage.setTitle("Eletricidade");
         primaryStage.setScene(scene);
         primaryStage.show();
+
     }
 }

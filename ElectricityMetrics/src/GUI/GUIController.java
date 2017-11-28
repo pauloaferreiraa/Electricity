@@ -1,11 +1,15 @@
 package GUI;
+
+import Code.ReadData;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+
+import java.util.Map;
 
 public class GUIController {
 
@@ -21,20 +25,35 @@ public class GUIController {
     @FXML
     private LineChart<?, ?> monthChart;
 
-    private Boolean dayChartVisible, monthChartVisible;
+    private Boolean dayChartVisible, monthChartVisible, dayCHartFilled;
+    private CategoryAxis xAxisDays;
+    private NumberAxis yAxisDays;
+    private XYChart.Series seriesMeanDays;
+    private XYChart.Series seriesStdDevDays;
+    private ReadData rd;
 
-    public GUIController(){
+    public GUIController() {
+        rd = new ReadData();
         daysButton = new Button();
         monthButton = new Button();
-        dayChart = new LineChart<Number,String>(new NumberAxis(),new CategoryAxis());
-        monthChart = new LineChart<Number,String>(new NumberAxis(),new CategoryAxis());
+        xAxisDays = new CategoryAxis();
+        yAxisDays = new NumberAxis();
+        seriesMeanDays = new XYChart.Series();
+        seriesStdDevDays = new XYChart.Series();
+        dayChart = new LineChart<String, Number>(xAxisDays, yAxisDays);
+        //monthChart = new LineChart<Number,String>(new NumberAxis(),new CategoryAxis());
         dayChartVisible = false;
         monthChartVisible = false;
+        dayCHartFilled = false;
     }
 
     @FXML
     public void daysButtonCLicked(MouseEvent event) {
-        if(monthChartVisible){
+        if (!dayCHartFilled) {
+            initDayChart();
+            dayCHartFilled = true;
+        }
+        if (monthChartVisible) {
             monthChartVisible = !monthChartVisible;
             monthChart.setVisible(monthChartVisible);
         }
@@ -44,12 +63,31 @@ public class GUIController {
 
     @FXML
     public void monthButtonClicked(MouseEvent event) {
-        if(dayChartVisible){
+        if (dayChartVisible) {
             dayChartVisible = !dayChartVisible;
             dayChart.setVisible(dayChartVisible);
         }
         monthChartVisible = !monthChartVisible;
         monthChart.setVisible(monthChartVisible);
     }
+
+    public void initDayChart() {
+        dayChart.setAnimated(false);
+        Map<String, Double> medias = rd.getMediaDia();
+        Map<String,Double> desvio = rd.getDesvioDia();
+        for (String s : medias.keySet()) {
+            seriesMeanDays.getData().add(new XYChart.Data(s, medias.get(s)));
+        }
+
+        for(String s : desvio.keySet()){
+            seriesStdDevDays.getData().add(new XYChart.Data(s, medias.get(s)));
+        }
+        seriesMeanDays.setName("Média");
+        seriesStdDevDays.setName("Desvio Padrão");
+        dayChart.getData().addAll(seriesMeanDays,seriesStdDevDays);
+
+    }
+
+
 }
 
