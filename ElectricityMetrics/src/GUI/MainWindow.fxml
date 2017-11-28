@@ -19,7 +19,7 @@
             </AnchorPane>
           <AnchorPane>
                <children>
-                  <LineChart fx:id="dayChart" title="Gastos Diários" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <LineChart fx:id="dayChart" title="Gastos Diários" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
