@@ -24,6 +24,54 @@ public class ReadData {
             e.printStackTrace();
         }
     }
+
+    public ArrayList<String> getMonthByYear(String year){
+        String query_getMonth = "select distinct month from energy_history where year = " + year +";";
+
+        ResultSet rs = db.getData(query_getMonth);
+        ArrayList<String> m = new ArrayList<String>();
+        m.add("Mês");
+        try{
+            while(rs.next()){
+                m.add(String.valueOf(rs.getInt(1)));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return m;
+    }
+
+    public ArrayList<String> getDayByMonthYear(String year, String month){
+        String query = "select distinct day from energy_history where year = " + year +" and month = " + month + ";";
+
+        ResultSet rs = db.getData(query);
+        ArrayList<String> d = new ArrayList<String>();
+        d.add("Dias");
+        try{
+            while(rs.next()){
+                d.add(String.valueOf(rs.getInt(1)));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return d;
+    }
+
+    public ArrayList<String> years(){
+        String query_getYears = "select distinct year from energy_history group by year;";
+        ResultSet rs = db.getData(query_getYears);
+        ArrayList<String> y = new ArrayList<String>();
+        y.add("Ano");
+        try{
+            while(rs.next()){
+                y.add(String.valueOf(rs.getInt(1)));
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return y;
+    }
+
     public Map<String,Double> getMediaDia(){
         if(mediaDia.size()==0){
             CalcMediaDia();
@@ -35,7 +83,7 @@ public class ReadData {
 
     public Map<String,Double> getDesvioDia(){
         if(desvioDia.size()==0){
-            //CalcDesvioDia();
+            CalcDesvioDia();
             return desvioDia;
         }else{
             return desvioDia;
@@ -62,7 +110,6 @@ public class ReadData {
     }
 
     public void CalcMediaDia(){
-        Map<String, Integer> cont = new HashMap<String, Integer>();
         String query = "select year,month,day,avg(ch1_kw_avg) from energy_history group by month,year,day;";
         try{
             ResultSet rs = db.getData(query);
@@ -111,6 +158,25 @@ public class ReadData {
 
     }*/
 
+    public void CalcDesvioDia(){
+        String query = "select year,month,day,AVG((ch1_kw_avg - sub.a) * (ch1_kw_avg  - sub.a)) as var from energy_history , " +
+                " (SELECT AVG(ch1_kw_avg) AS a FROM energy_history) AS sub group by month,year,day;";
+        try{
+            ResultSet rs = db.getData(query);
+            while (rs.next()) {
+                String date = rs.getString(1) + "/" + rs.getString(2) + "/" + rs.getString(3);
+
+                if(!desvioDia.containsKey(date)){
+                    desvioDia.put(date, Math.sqrt(Double.parseDouble(rs.getString(4))));
+                }else{
+                    desvioDia.put(date,Math.sqrt(Double.parseDouble(rs.getString(4))));
+                }
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     /*public void CalcDesvioDia(){
         Map<String, Integer> cont  =new HashMap<String, Integer>();
