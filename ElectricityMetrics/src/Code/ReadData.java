@@ -1,10 +1,12 @@
 package Code;
 
 import java.io.*;
+import java.sql.ResultSet;
 import java.util.*;
 
 public class ReadData {
 
+    private Database db = new Database();
     String csvFile = "Test.csv";
     String cvsSplitBy = ";";
     BufferedReader br ;
@@ -14,6 +16,14 @@ public class ReadData {
     Map<String,Double> desvioMes = new TreeMap<String, Double>();
 
 
+    public ReadData(){
+        db = new Database();
+        try {
+            db.connect();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     public Map<String,Double> getMediaDia(){
         if(mediaDia.size()==0){
             CalcMediaDia();
@@ -25,7 +35,7 @@ public class ReadData {
 
     public Map<String,Double> getDesvioDia(){
         if(desvioDia.size()==0){
-            CalcDesvioDia();
+            //CalcDesvioDia();
             return desvioDia;
         }else{
             return desvioDia;
@@ -51,8 +61,27 @@ public class ReadData {
         }
     }
 
-
     public void CalcMediaDia(){
+        Map<String, Integer> cont = new HashMap<String, Integer>();
+        String query = "select year,month,day,avg(ch1_kw_avg) from energy_history group by month,year,day;";
+        try{
+            ResultSet rs = db.getData(query);
+            while (rs.next()) {
+                String date = rs.getString(1) + "/" + rs.getString(2) + "/" + rs.getString(3);
+
+                if(!mediaDia.containsKey(date)){
+                    mediaDia.put(date, Double.parseDouble(rs.getString(4)));
+                }else{
+                    mediaDia.put(date,Double.parseDouble(rs.getString(4)));
+                }
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    /*public void CalcMediaDia(){
 
         Map<String, Integer> cont  =new HashMap<String, Integer>();
 
@@ -80,10 +109,10 @@ public class ReadData {
             mediaDia.put(s,mediaDia.get(s)/cont.get(s));
         }
 
-    }
+    }*/
 
 
-    public void CalcDesvioDia(){
+    /*public void CalcDesvioDia(){
         Map<String, Integer> cont  =new HashMap<String, Integer>();
         try{
             br= new BufferedReader(new FileReader(csvFile));
@@ -109,7 +138,7 @@ public class ReadData {
             desvioDia.put(s,Math.sqrt(desvioDia.get(s)/cont.get(s)));
         }
 
-    }
+    }*/
 
 
 

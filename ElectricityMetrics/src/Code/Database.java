@@ -1,9 +1,7 @@
 package Code;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 
 public class Database {
 
@@ -14,6 +12,18 @@ public class Database {
         Class.forName("org.sqlite.JDBC"); //Carrega o jdbc
         connection = DriverManager.getConnection("jdbc:sqlite:be.db");
         statement = connection.createStatement();
+    }
+
+    public ResultSet getData(String query){
+        ResultSet rs = null;
+
+        try{
+            rs = statement.executeQuery(query);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return rs;
     }
 
 

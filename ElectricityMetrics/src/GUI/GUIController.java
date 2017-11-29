@@ -74,16 +74,16 @@ public class GUIController {
     public void initDayChart() {
         dayChart.setAnimated(false);
         Map<String, Double> medias = rd.getMediaDia();
-        Map<String,Double> desvio = rd.getDesvioDia();
+        //Map<String,Double> desvio = rd.getDesvioDia();
         for (String s : medias.keySet()) {
             seriesMeanDays.getData().add(new XYChart.Data(s, medias.get(s)));
         }
 
-        for(String st : desvio.keySet()){
+        /*for(String st : desvio.keySet()){
             seriesStdDevDays.getData().add(new XYChart.Data(st, desvio.get(st)));
-        }
+        }*/
         seriesMeanDays.setName("Média");
-        seriesStdDevDays.setName("Desvio Padrão");
+        //seriesStdDevDays.setName("Desvio Padrão");
         dayChart.getData().addAll(seriesMeanDays,seriesStdDevDays);
 
     }
