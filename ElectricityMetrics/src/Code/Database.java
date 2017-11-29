@@ -12,9 +12,10 @@ public class Database {
 
     public void connect() throws SQLException, ClassNotFoundException{
         Class.forName("org.sqlite.JDBC"); //Carrega o jdbc
-        connection = DriverManager.getConnection("jdbc.sqlite:be.db");
+        connection = DriverManager.getConnection("jdbc:sqlite:be.db");
         statement = connection.createStatement();
     }
+
 
     public void close() throws SQLException{
         if(connection != null){

@@ -7,14 +7,14 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="898.0" prefWidth="1243.0" stylesheets="@../Style/stylesheet.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GUIController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="866.0" stylesheets="@../Style/stylesheet.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GUIController">
    <children>
       <SplitPane dividerPositions="0.1731374606505771" prefHeight="898.0" prefWidth="1243.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="daysButton" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#daysButtonCLicked" prefHeight="58.0" prefWidth="211.0" text="Gastos Diários" AnchorPane.bottomAnchor="838.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <Button fx:id="monthButton" layoutY="58.0" mnemonicParsing="false" onMouseClicked="#monthButtonClicked" prefHeight="58.0" prefWidth="211.0" text="Gastos Mensais" AnchorPane.bottomAnchor="770.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="58.0" />
+                  <Button fx:id="daysButton" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#daysButtonCLicked" prefHeight="58.0" prefWidth="211.0" text="Gastos Diários" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="monthButton" layoutY="58.0" mnemonicParsing="false" onMouseClicked="#monthButtonClicked" prefHeight="58.0" prefWidth="211.0" text="Gastos Mensais" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="58.0" />
 
                </children>
             </AnchorPane>
@@ -23,7 +23,7 @@
                   <SplitPane dividerPositions="0.2222222222222222" orientation="VERTICAL" prefHeight="738.0" prefWidth="927.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="456.0" prefWidth="700.0">
                            <children>
                               <LineChart fx:id="monthChart" prefHeight="691.0" prefWidth="1020.0" title="Gastos Mensais" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <xAxis>
