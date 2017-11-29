@@ -47,4 +47,7 @@
 **/crashlytics.properties
 **/crashlytics-build.properties
 **/fabric.properties
+<<<<<<< HEAD
 Test.csv
+=======
+>>>>>>> 5b313dc5f3d422ba4825d8cd074b76cf91bd047a

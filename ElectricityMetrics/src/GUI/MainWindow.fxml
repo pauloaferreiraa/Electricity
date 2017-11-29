@@ -7,6 +7,7 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
+<<<<<<< HEAD
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="898.0" prefWidth="1243.0" stylesheets="@../Style/stylesheet.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GUIController">
    <children>
       <SplitPane dividerPositions="0.1731374606505771" prefHeight="898.0" prefWidth="1243.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -15,10 +16,21 @@
                <children>
                   <Button fx:id="daysButton" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#daysButtonCLicked" prefHeight="58.0" prefWidth="211.0" text="Gastos Diários" AnchorPane.bottomAnchor="838.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <Button fx:id="monthButton" layoutY="58.0" mnemonicParsing="false" onMouseClicked="#monthButtonClicked" prefHeight="58.0" prefWidth="211.0" text="Gastos Mensais" AnchorPane.bottomAnchor="770.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="58.0" />
+=======
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="740.0" prefWidth="955.0" stylesheets="@../Style/stylesheet.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GUIController">
+   <children>
+      <SplitPane dividerPositions="0.1731374606505771" prefHeight="740.0" prefWidth="955.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="daysButton" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#daysButtonCLicked" prefHeight="41.0" prefWidth="162.0" text="Gastos Diários" AnchorPane.bottomAnchor="696.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="monthButton" layoutY="42.0" mnemonicParsing="false" onMouseClicked="#monthButtonClicked" prefHeight="41.0" prefWidth="162.0" text="Gastos Mensais" AnchorPane.bottomAnchor="655.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0" />
+>>>>>>> 5b313dc5f3d422ba4825d8cd074b76cf91bd047a
                </children>
             </AnchorPane>
           <AnchorPane>
                <children>
+<<<<<<< HEAD
                   <SplitPane dividerPositions="0.2222222222222222" orientation="VERTICAL" prefHeight="738.0" prefWidth="927.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
@@ -44,6 +56,24 @@
                         </AnchorPane>
                     </items>
                   </SplitPane>
+=======
+                  <LineChart fx:id="dayChart" title="Gastos Diários" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+                  <LineChart fx:id="monthChart" prefHeight="738.0" prefWidth="784.0" title="Gastos Mensais" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+>>>>>>> 5b313dc5f3d422ba4825d8cd074b76cf91bd047a
                </children>
             </AnchorPane>
         </items>
