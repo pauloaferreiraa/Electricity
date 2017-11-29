@@ -15,7 +15,7 @@ public class Main extends Application {
     private static Database db;
 
     public static void main(String[] args) {
-        //launch(args);
+        launch(args);
         db = new Database();
         try {
             db.connect();
@@ -45,10 +45,7 @@ public class Main extends Application {
             System.out.println(s+"   :"+ desvioM.get(s));
         }*/
     }
-<<<<<<< HEAD
 
-=======
->>>>>>> 5b313dc5f3d422ba4825d8cd074b76cf91bd047a
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainWindow.fxml"));

@@ -7,9 +7,5 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-<<<<<<< HEAD
-    <orderEntry type="library" name="sqlite-jdbc-3.21.0" level="project" />
-=======
->>>>>>> 5b313dc5f3d422ba4825d8cd074b76cf91bd047a
   </component>
 </module>
