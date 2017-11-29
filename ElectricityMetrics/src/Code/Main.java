@@ -14,7 +14,6 @@ public class Main extends Application {
     private static GUIController controller;
 
     public static void main(String[] args) {
-
         launch(args);
         ReadData rd = new ReadData();
         Map<String,Double> medias = rd.getMediaDia();
