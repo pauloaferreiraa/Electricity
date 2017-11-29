@@ -18,8 +18,13 @@ public class Main extends Application {
         //launch(args);
         db = new Database();
         try {
-            db.connect();
-        }catch (Exception e){
+            try {
+
+                db.connect();
+            }finally {
+                db.close();
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
         ReadData rd = new ReadData();
