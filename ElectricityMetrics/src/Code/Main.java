@@ -12,11 +12,18 @@ import java.util.Map;
 public class Main extends Application {
 
     private static GUIController controller;
+    private static Database db;
 
     public static void main(String[] args) {
-        launch(args);
+        //launch(args);
+        db = new Database();
+        try {
+            db.connect();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         ReadData rd = new ReadData();
-        Map<String,Double> medias = rd.getMediaDia();
+        //Map<String, Double> medias = rd.getMediaDia();
         /*for(String s : medias.keySet()){
             System.out.println(s+"   :"+ medias.get(s));
         }
@@ -38,6 +45,7 @@ public class Main extends Application {
             System.out.println(s+"   :"+ desvioM.get(s));
         }*/
     }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainWindow.fxml"));
