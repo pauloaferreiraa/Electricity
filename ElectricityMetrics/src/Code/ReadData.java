@@ -5,7 +5,7 @@ import java.util.*;
 
 public class ReadData {
 
-    String csvFile = "Test.csv";
+    String csvFile = "Test_.csv";
     String cvsSplitBy = ";";
     BufferedReader br ;
     Map<String,Double> mediaDia = new TreeMap<String, Double>();
