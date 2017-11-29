@@ -37,9 +37,6 @@ public class GUIController {
     private Pane daysPane;
 
     @FXML
-    private Button gastosDiariosApplyButton;
-
-    @FXML
     private ChoiceBox<String> gastosDiariosYearCB;
 
     @FXML
@@ -57,7 +54,6 @@ public class GUIController {
 
     public GUIController() {
         rd = new ReadData();
-        gastosDiariosApplyButton = new Button();
         daysButton = new Button();
         monthButton = new Button();
         xAxisDays = new CategoryAxis();
@@ -100,10 +96,11 @@ public class GUIController {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 if (!(gastosDiariosYearCB.getSelectionModel().isEmpty() || gastosDiariosMonthCB.getSelectionModel().isEmpty())) {
-                    String year = String.valueOf(gastosDiariosYearCB.getItems().get((Integer) newValue));
+                    String year = String.valueOf(gastosDiariosYearCB.getSelectionModel().getSelectedItem());
                     String month = String.valueOf(gastosDiariosMonthCB.getItems().get((Integer) newValue));
                     if (!year.equals("Ano") && !month.equals("Mês")) {
                         fillDayCB(year, month);
+                        System.out.println(year + " " + month);
                     } else {
                         if (month.equals("Mês")) {
                             gastosDiariosDayCB.getItems().clear();
@@ -112,6 +109,32 @@ public class GUIController {
                 }
             }
         });
+
+        gastosDiariosDayCB.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                String year = String.valueOf(gastosDiariosYearCB.getSelectionModel().getSelectedItem());
+                String month = String.valueOf(gastosDiariosMonthCB.getSelectionModel().getSelectedItem());
+                String day = String.valueOf(gastosDiariosDayCB.getItems().get((Integer) newValue));
+                applyFilters(year, month, day);
+            }
+        });
+    }
+
+    private void applyFilters(String year, String month, String day) {
+        Map<String, Double> medias = rd.getMediaDia(year, month, day);
+        Map<String, Double> desvio = rd.getDesvioDia(year,month,day);
+        seriesStdDevDays.getData().clear();
+        seriesMeanDays.getData().clear();
+        for (String s : medias.keySet()) {
+
+            seriesMeanDays.getData().add(new XYChart.Data(s, medias.get(s)));
+        }
+
+        for (String st : desvio.keySet()) {
+            System.out.println(st);
+            seriesStdDevDays.getData().add(new XYChart.Data(st, desvio.get(st)));
+        }
     }
 
     @FXML

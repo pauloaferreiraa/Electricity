@@ -81,6 +81,15 @@ public class ReadData {
         }
     }
 
+    public Map<String,Double> getMediaDia(String year, String month, String day){
+        String date = year + "/" + month + "/" + day;
+        Map<String,Double> res = new TreeMap<>();
+
+        res.put(date,mediaDia.get(date));
+
+        return res;
+    }
+
     public Map<String,Double> getDesvioDia(){
         if(desvioDia.size()==0){
             CalcDesvioDia();
@@ -88,6 +97,15 @@ public class ReadData {
         }else{
             return desvioDia;
         }
+    }
+
+    public Map<String,Double> getDesvioDia(String year, String month, String day){
+        String date = year + "/" + month + "/" + day;
+        Map<String,Double> res = new TreeMap<>();
+
+        res.put(date,desvioDia.get(date));
+
+        return res;
     }
 
     public Map<String,Double> getMediaMes(){
