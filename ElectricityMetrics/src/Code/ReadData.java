@@ -90,6 +90,30 @@ public class ReadData {
         return res;
     }
 
+    public Map<String,Double> getMediaDia(String year, String month){
+        String date = year + "/" + month;
+        Map<String,Double> res = new TreeMap<>();
+        for(String s: mediaDia.keySet()){
+            if(s.contains(date)) {
+                res.put(s, mediaDia.get(s));
+            }
+        }
+
+        return res;
+    }
+
+    public Map<String,Double> getMediaDia(String year){
+        String date = year;
+        Map<String,Double> res = new TreeMap<>();
+        for(String s: mediaDia.keySet()){
+            if(s.contains(date)) {
+                res.put(s, mediaDia.get(s));
+            }
+        }
+
+        return res;
+    }
+
     public Map<String,Double> getDesvioDia(){
         if(desvioDia.size()==0){
             CalcDesvioDia();
@@ -104,6 +128,32 @@ public class ReadData {
         Map<String,Double> res = new TreeMap<>();
 
         res.put(date,desvioDia.get(date));
+
+        return res;
+    }
+
+    public Map<String,Double> getDesvioDia(String year){
+        String date = year;
+        Map<String,Double> res = new TreeMap<>();
+        for(String s: desvioDia.keySet()){
+            if(s.contains(date)) {
+                res.put(s, desvioDia.get(s));
+            }
+        }
+
+
+        return res;
+    }
+
+    public Map<String,Double> getDesvioDia(String year, String month){
+        String date = year + "/" + month;
+        Map<String,Double> res = new TreeMap<>();
+        for(String s: desvioDia.keySet()){
+            if(s.contains(date)) {
+                res.put(s, desvioDia.get(s));
+            }
+        }
+
 
         return res;
     }

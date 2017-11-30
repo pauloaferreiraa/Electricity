@@ -12,14 +12,18 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 import java.util.Map;
 
 public class GUIController {
+
+    @FXML
+    private AnchorPane gdChartPane;
 
     @FXML
     private Button daysButton;
@@ -51,6 +55,8 @@ public class GUIController {
     private XYChart.Series seriesMeanDays;
     private XYChart.Series seriesStdDevDays;
     private ReadData rd;
+    private final double SCALE_DELTA = 1.1;
+    private AnimatedZoom zoomOperator;
 
     public GUIController() {
         rd = new ReadData();
@@ -69,6 +75,7 @@ public class GUIController {
         monthChartVisible = false;
         dayCHartFilled = false;
         daysPaneVisible = false;
+        zoomOperator = new AnimatedZoom();
     }
 
     @FXML
@@ -81,12 +88,16 @@ public class GUIController {
         gastosDiariosYearCB.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                String year = String.valueOf(gastosDiariosYearCB.getItems().get((Integer) newValue));
-                if (!year.equals("Ano")) {
-                    fillMonthCB(year);
-                } else {
-                    gastosDiariosMonthCB.getItems().clear();
-                    gastosDiariosDayCB.getItems().clear();
+                if (!(gastosDiariosYearCB.getSelectionModel().isEmpty())) {
+                    String year = String.valueOf(gastosDiariosYearCB.getItems().get((Integer) newValue));
+                    if (!year.equals("Ano")) {
+                        fillMonthCB(year);
+                        applyFilters(year);
+                    } else {
+                        gastosDiariosMonthCB.getItems().clear();
+                        gastosDiariosDayCB.getItems().clear();
+                        applyFilters();
+                    }
                 }
 
 
@@ -100,10 +111,12 @@ public class GUIController {
                     String month = String.valueOf(gastosDiariosMonthCB.getItems().get((Integer) newValue));
                     if (!year.equals("Ano") && !month.equals("Mês")) {
                         fillDayCB(year, month);
+                        applyFilters(year,month);
                         System.out.println(year + " " + month);
                     } else {
                         if (month.equals("Mês")) {
                             gastosDiariosDayCB.getItems().clear();
+                            applyFilters(year);
                         }
                     }
                 }
@@ -113,26 +126,73 @@ public class GUIController {
         gastosDiariosDayCB.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                String year = String.valueOf(gastosDiariosYearCB.getSelectionModel().getSelectedItem());
-                String month = String.valueOf(gastosDiariosMonthCB.getSelectionModel().getSelectedItem());
-                String day = String.valueOf(gastosDiariosDayCB.getItems().get((Integer) newValue));
-                applyFilters(year, month, day);
+
+                if(!gastosDiariosDayCB.getSelectionModel().isEmpty()) {
+                    String year = String.valueOf(gastosDiariosYearCB.getSelectionModel().getSelectedItem());
+                    String month = String.valueOf(gastosDiariosMonthCB.getSelectionModel().getSelectedItem());
+                    String day = String.valueOf(gastosDiariosDayCB.getItems().get((Integer) newValue));
+                    if (!day.equals("Dias")) {
+                        applyFilters(year, month, day);
+                    } else {
+                        applyFilters(year, month);
+                    }
+                }
+
+
             }
         });
     }
 
-    private void applyFilters(String year, String month, String day) {
+    public void applyFilters(){
+        Map<String, Double> medias = rd.getMediaDia();
+        Map<String, Double> desvio = rd.getDesvioDia();
+        for (String s : medias.keySet()) {
+            seriesMeanDays.getData().add(new XYChart.Data(s, medias.get(s)));
+        }
+
+        for (String st : desvio.keySet()) {
+            seriesStdDevDays.getData().add(new XYChart.Data(st, desvio.get(st)));
+        }
+    }
+
+    public void applyFilters(String year){
+        Map<String, Double> medias = rd.getMediaDia(year);
+        Map<String, Double> desvio = rd.getDesvioDia(year);
+        seriesStdDevDays.getData().clear();
+        seriesMeanDays.getData().clear();
+        for (String s : medias.keySet()) {
+            seriesMeanDays.getData().add(new XYChart.Data(s, medias.get(s)));
+        }
+
+        for (String st : desvio.keySet()) {
+            seriesStdDevDays.getData().add(new XYChart.Data(st, desvio.get(st)));
+        }
+    }
+
+    public void applyFilters(String year,String month){
+        Map<String, Double> medias = rd.getMediaDia(year, month);
+        Map<String, Double> desvio = rd.getDesvioDia(year,month);
+        seriesStdDevDays.getData().clear();
+        seriesMeanDays.getData().clear();
+        for (String s : medias.keySet()) {
+            seriesMeanDays.getData().add(new XYChart.Data(s, medias.get(s)));
+        }
+
+        for (String st : desvio.keySet()) {
+            seriesStdDevDays.getData().add(new XYChart.Data(st, desvio.get(st)));
+        }
+    }
+
+    public void applyFilters(String year, String month, String day) {
         Map<String, Double> medias = rd.getMediaDia(year, month, day);
         Map<String, Double> desvio = rd.getDesvioDia(year,month,day);
         seriesStdDevDays.getData().clear();
         seriesMeanDays.getData().clear();
         for (String s : medias.keySet()) {
-
             seriesMeanDays.getData().add(new XYChart.Data(s, medias.get(s)));
         }
 
         for (String st : desvio.keySet()) {
-            System.out.println(st);
             seriesStdDevDays.getData().add(new XYChart.Data(st, desvio.get(st)));
         }
     }
@@ -203,6 +263,18 @@ public class GUIController {
         ArrayList<String> months = rd.getDayByMonthYear(year, month);
         ObservableList<String> list = FXCollections.observableArrayList(months);
         gastosDiariosDayCB.setItems(list);
+    }
+
+    @FXML
+    void onScroll(ScrollEvent event) {
+
+        double zoomFactor = 1.5;
+        if (event.getDeltaY() <= 0) {
+            // zoom out
+            zoomFactor = 1 / zoomFactor;
+        }
+        zoomOperator.zoom(gdChartPane, zoomFactor, event.getSceneX(), event.getSceneY());
+
     }
 
 
