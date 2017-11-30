@@ -196,35 +196,6 @@ public class ReadData {
         }
     }
 
-    /*public void CalcMediaDia(){
-
-        Map<String, Integer> cont  =new HashMap<String, Integer>();
-
-        try{
-            br= new BufferedReader(new FileReader(csvFile));
-            String line=br.readLine();
-            while ((line = br.readLine()) != null) {
-                String[] dados = line.split(cvsSplitBy);
-                if(!mediaDia.containsKey(dados[0])){
-                    mediaDia.put(dados[0],getDouble(dados[1])+getDouble(dados[2]));
-                    cont.put(dados[0],1);
-                }else{
-                    mediaDia.put(dados[0],mediaDia.get(dados[0])+getDouble(dados[1])+getDouble(dados[2]));
-                    cont.put(dados[0],cont.get(dados[0])+1);
-                }
-
-
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        for (String s : mediaDia.keySet()) {
-            mediaDia.put(s,mediaDia.get(s)/cont.get(s));
-        }
-
-    }*/
 
     public void CalcDesvioDia(){
         String query = "select year,month,day,AVG((ch1_kw_avg - sub.a) * (ch1_kw_avg  - sub.a)) as var from energy_history , " +
@@ -246,80 +217,48 @@ public class ReadData {
         }
     }
 
-    /*public void CalcDesvioDia(){
-        Map<String, Integer> cont  =new HashMap<String, Integer>();
-        try{
-            br= new BufferedReader(new FileReader(csvFile));
-            String line=br.readLine();
-            while ((line = br.readLine()) != null) {
-                String[] dados = line.split(cvsSplitBy);
-                if(!desvioDia.containsKey(dados[0])){
-                    desvioDia.put(dados[0],Math.pow(getDouble(dados[1])+getDouble(dados[2])-mediaDia.get(dados[0]),2));
-                    cont.put(dados[0],1);
-                }else{
-                    desvioDia.put(dados[0],desvioDia.get(dados[0])+Math.pow(getDouble(dados[1])+getDouble(dados[2])-mediaDia.get(dados[0]),2));
-                    cont.put(dados[0],cont.get(dados[0])+1);
-                }
-
-
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        for (String s : desvioDia.keySet()) {
-            desvioDia.put(s,Math.sqrt(desvioDia.get(s)/cont.get(s)));
-        }
-
-    }*/
-
 
 
 
     public void CalcMediaMes(){
-        Map<String, Integer> cont  =new HashMap<String, Integer>();
-        String mes;
-        String[] data;
-        for(String s : mediaDia.keySet()){
-            data = s.split("/");
-            mes= data[1]+"/"+data[2];
-            if(!mediaMes.containsKey(mes)){
-                mediaMes.put(mes,mediaDia.get(s));
-                cont.put(mes,1);
-            }else{
-                mediaMes.put(mes,mediaMes.get(mes)+mediaDia.get(s));
-                cont.put(mes,cont.get(mes)+1);
-            }
-        }
+        String query = "select year, month, avg(ch1_kw_avg) from energy_history group by year,month;";
+        try{
+            ResultSet rs = db.getData(query);
+            while (rs.next()) {
+                String date = rs.getString(1) + "/" + rs.getString(2);
 
-        for (String s : mediaMes.keySet()) {
-            mediaMes.put(s,mediaMes.get(s)/cont.get(s));
+                if(!mediaMes.containsKey(date)){
+                    mediaMes.put(date, Double.parseDouble(rs.getString(3)));
+                }else{
+                    mediaMes.put(date,Double.parseDouble(rs.getString(3)));
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
     }
 
     public void CalcDesvioMes(){
-        Map<String, Integer> cont  =new HashMap<String, Integer>();
-        String mes;
-        String[] data;
-        for(String s : mediaDia.keySet()){
-            data = s.split("/");
-            mes=data[1]+"/"+data[2];
-            if(!desvioMes.containsKey(mes)){
-                desvioMes.put(mes,Math.pow(mediaDia.get(s)-mediaMes.get(mes),2));
-                cont.put(mes,1);
-            }else{
-                desvioMes.put(mes,desvioMes.get(mes)+Math.pow(mediaDia.get(s)-mediaMes.get(mes),2));
-                cont.put(mes,cont.get(mes)+1);
+        String query = "select year,month,AVG((ch1_kw_avg - sub.a) * (ch1_kw_avg  - sub.a)) as var from energy_history , (SELECT AVG(ch1_kw_avg) AS a FROM energy_history) AS sub group by month,year;";
+
+        try{
+            ResultSet rs = db.getData(query);
+            while (rs.next()) {
+                String date = rs.getString(1) + "/" + rs.getString(2);
+
+                if(!desvioMes.containsKey(date)){
+                    desvioMes.put(date, Math.sqrt(Double.parseDouble(rs.getString(3))));
+                }else{
+                    desvioMes.put(date,Math.sqrt(Double.parseDouble(rs.getString(3))));
+                }
+
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
-        for (String s : mediaMes.keySet()) {
-            mediaMes.put(s,Math.sqrt(mediaMes.get(s)/cont.get(s)));
-        }
     }
-
 
 
 

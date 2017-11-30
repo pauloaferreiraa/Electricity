@@ -49,11 +49,15 @@ public class GUIController {
     @FXML
     private ChoiceBox<String> gastosDiariosDayCB;
 
-    private Boolean dayChartVisible, monthChartVisible, dayCHartFilled, daysPaneVisible, gastosDiariosMonthCBVisible, gastosDiariosDayCBVisible;
+    private Boolean dayChartVisible, monthChartVisible, dayCHartFilled, daysPaneVisible, monthChartFilled;
     private CategoryAxis xAxisDays;
     private NumberAxis yAxisDays;
+    private CategoryAxis xAxisMonth;
+    private NumberAxis yAxisMonth;
     private XYChart.Series seriesMeanDays;
     private XYChart.Series seriesStdDevDays;
+    private XYChart.Series seriesMeanMonth;
+    private XYChart.Series seriesStdDevMonth;
     private ReadData rd;
     private final double SCALE_DELTA = 1.1;
     private AnimatedZoom zoomOperator;
@@ -63,18 +67,23 @@ public class GUIController {
         daysButton = new Button();
         monthButton = new Button();
         xAxisDays = new CategoryAxis();
+        xAxisMonth = new CategoryAxis();
         yAxisDays = new NumberAxis();
+        yAxisMonth = new NumberAxis();
         seriesMeanDays = new XYChart.Series();
         seriesStdDevDays = new XYChart.Series();
+        seriesMeanMonth = new XYChart.Series();
+        seriesStdDevMonth = new XYChart.Series();
         dayChart = new LineChart<String, Number>(xAxisDays, yAxisDays);
+        monthChart = new LineChart<String,Number>(xAxisMonth,yAxisMonth);
         gastosDiariosYearCB = new ChoiceBox<String>();
         gastosDiariosMonthCB = new ChoiceBox<String>();
         gastosDiariosDayCB = new ChoiceBox<String>();
-        //monthChart = new LineChart<Number,String>(new NumberAxis(),new CategoryAxis());
         dayChartVisible = false;
         monthChartVisible = false;
         dayCHartFilled = false;
         daysPaneVisible = false;
+        monthChartFilled = false;
         zoomOperator = new AnimatedZoom();
     }
 
@@ -216,6 +225,10 @@ public class GUIController {
 
     @FXML
     public void monthButtonClicked(MouseEvent event) {
+        if(!monthChartFilled){
+            initMonthCHart();
+            monthChartFilled = true;
+        }
         if (dayChartVisible) {
             dayChartVisible = !dayChartVisible;
             dayChart.setVisible(dayChartVisible);
@@ -226,6 +239,22 @@ public class GUIController {
         }
         monthChartVisible = !monthChartVisible;
         monthChart.setVisible(monthChartVisible);
+    }
+
+    private void initMonthCHart() {
+        Map<String, Double> medias = rd.getMediaMes();
+        Map<String, Double> desvio = rd.getDesvioMes();
+        monthChart.setAnimated(false);
+        for (String s : medias.keySet()) {
+            seriesMeanMonth.getData().add(new XYChart.Data(s, medias.get(s)));
+        }
+
+        for (String st : desvio.keySet()) {
+            seriesStdDevMonth.getData().add(new XYChart.Data(st, desvio.get(st)));
+        }
+        seriesMeanMonth.setName("Média");
+        seriesStdDevMonth.setName("Desvio Padrão");
+        monthChart.getData().addAll(seriesMeanMonth, seriesStdDevMonth);
     }
 
     public void initDayChart() {

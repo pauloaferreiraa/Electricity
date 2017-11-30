@@ -38,7 +38,7 @@
                            </children></AnchorPane>
                       <AnchorPane fx:id="gdChartPane" minHeight="0.0" minWidth="0.0" onScroll="#onScroll" prefHeight="456.0" prefWidth="700.0">
                            <children>
-                              <LineChart fx:id="monthChart" prefHeight="691.0" prefWidth="1020.0" title="Gastos Mensais" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <LineChart fx:id="dayChart" prefHeight="691.0" prefWidth="1020.0" title="Gastos Diários" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <xAxis>
                                   <CategoryAxis side="BOTTOM" />
                                 </xAxis>
@@ -46,7 +46,7 @@
                                   <NumberAxis side="LEFT" />
                                 </yAxis>
                               </LineChart>
-                              <LineChart fx:id="dayChart" prefHeight="691.0" prefWidth="1020.0" title="Gastos Diários" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <LineChart fx:id="monthChart" prefHeight="691.0" prefWidth="1020.0" title="Gastos Mensais" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <xAxis>
                                   <CategoryAxis side="BOTTOM" />
                                 </xAxis>
