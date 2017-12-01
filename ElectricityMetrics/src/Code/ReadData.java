@@ -14,6 +14,7 @@ public class ReadData {
     Map<String,Double> desvioDia = new TreeMap<String, Double>();
     Map<String,Double> mediaMes = new TreeMap<String, Double>();
     Map<String,Double> desvioMes = new TreeMap<String, Double>();
+    Map<String,Integer> sombra = new TreeMap<String,Integer>();
 
 
     public ReadData(){
@@ -219,7 +220,6 @@ public class ReadData {
 
 
 
-
     public void CalcMediaMes(){
         String query = "select year, month, avg(ch1_kw_avg) from energy_history group by year,month;";
         try{
@@ -271,6 +271,22 @@ public class ReadData {
             return 0;
         }
 
+    }
+
+    public Map<String,Integer> getSombra(){
+        String query = "select hour,count(*) from energy_history where ch1_kw_avg = 2.415 group by hour;";
+
+        try{
+            ResultSet rs = db.getData(query);
+            while(rs.next()){
+                sombra.put(rs.getString(1),rs.getInt(2));
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }finally {
+            return sombra;
+        }
     }
 
 
