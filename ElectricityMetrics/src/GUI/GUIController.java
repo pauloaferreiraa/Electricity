@@ -1,11 +1,15 @@
 package GUI;
 
+import Code.Main;
 import Code.ReadData;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -16,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -75,7 +80,7 @@ public class GUIController {
         seriesMeanMonth = new XYChart.Series();
         seriesStdDevMonth = new XYChart.Series();
         dayChart = new LineChart<>(xAxisDays, yAxisDays);
-        monthChart = new LineChart<>(xAxisMonth,yAxisMonth);
+        monthChart = new LineChart<>(xAxisMonth, yAxisMonth);
         gastosDiariosYearCB = new ChoiceBox<>();
         gastosDiariosMonthCB = new ChoiceBox<>();
         gastosDiariosDayCB = new ChoiceBox<>();
@@ -120,7 +125,7 @@ public class GUIController {
                     String month = String.valueOf(gastosDiariosMonthCB.getItems().get((Integer) newValue));
                     if (!year.equals("Ano") && !month.equals("Mês")) {
                         fillDayCB(year, month);
-                        applyFilters(year,month);
+                        applyFilters(year, month);
                         System.out.println(year + " " + month);
                     } else {
                         if (month.equals("Mês")) {
@@ -136,7 +141,7 @@ public class GUIController {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
-                if(!gastosDiariosDayCB.getSelectionModel().isEmpty()) {
+                if (!gastosDiariosDayCB.getSelectionModel().isEmpty()) {
                     String year = String.valueOf(gastosDiariosYearCB.getSelectionModel().getSelectedItem());
                     String month = String.valueOf(gastosDiariosMonthCB.getSelectionModel().getSelectedItem());
                     String day = String.valueOf(gastosDiariosDayCB.getItems().get((Integer) newValue));
@@ -152,7 +157,7 @@ public class GUIController {
         });
     }
 
-    public void applyFilters(){
+    public void applyFilters() {
         Map<String, Double> medias = rd.getMediaDia();
         Map<String, Double> desvio = rd.getDesvioDia();
         for (String s : medias.keySet()) {
@@ -164,7 +169,7 @@ public class GUIController {
         }
     }
 
-    public void applyFilters(String year){
+    public void applyFilters(String year) {
         Map<String, Double> medias = rd.getMediaDia(year);
         Map<String, Double> desvio = rd.getDesvioDia(year);
         seriesStdDevDays.getData().clear();
@@ -178,9 +183,9 @@ public class GUIController {
         }
     }
 
-    public void applyFilters(String year,String month){
+    public void applyFilters(String year, String month) {
         Map<String, Double> medias = rd.getMediaDia(year, month);
-        Map<String, Double> desvio = rd.getDesvioDia(year,month);
+        Map<String, Double> desvio = rd.getDesvioDia(year, month);
         seriesStdDevDays.getData().clear();
         seriesMeanDays.getData().clear();
         for (String s : medias.keySet()) {
@@ -194,7 +199,7 @@ public class GUIController {
 
     public void applyFilters(String year, String month, String day) {
         Map<String, Double> medias = rd.getMediaDia(year, month, day);
-        Map<String, Double> desvio = rd.getDesvioDia(year,month,day);
+        Map<String, Double> desvio = rd.getDesvioDia(year, month, day);
         seriesStdDevDays.getData().clear();
         seriesMeanDays.getData().clear();
         for (String s : medias.keySet()) {
@@ -225,7 +230,7 @@ public class GUIController {
 
     @FXML
     public void monthButtonClicked(MouseEvent event) {
-        if(!monthChartFilled){
+        if (!monthChartFilled) {
             initMonthCHart();
             monthChartFilled = true;
         }
@@ -304,6 +309,15 @@ public class GUIController {
         }
         zoomOperator.zoom(gdChartPane, zoomFactor, event.getSceneX(), event.getSceneY());
 
+    }
+
+    @FXML
+    void sombraBtClicked(MouseEvent event) throws Exception{
+        Stage stage = Main.stage;
+        Parent root = FXMLLoader.load(getClass().getResource("/GUI/Sombra.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 

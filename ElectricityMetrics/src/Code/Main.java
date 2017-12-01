@@ -13,6 +13,7 @@ public class Main extends Application {
 
     private static GUIController controller;
     private static Database db;
+    public static Stage stage;
 
     public static void main(String[] args) {
         launch(args);
@@ -48,6 +49,7 @@ public class Main extends Application {
         primaryStage.setTitle("Eletricidade");
         primaryStage.setScene(scene);
         primaryStage.show();
+        this.stage = primaryStage;
 
     }
 }
