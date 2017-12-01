@@ -74,11 +74,11 @@ public class GUIController {
         seriesStdDevDays = new XYChart.Series();
         seriesMeanMonth = new XYChart.Series();
         seriesStdDevMonth = new XYChart.Series();
-        dayChart = new LineChart<String, Number>(xAxisDays, yAxisDays);
-        monthChart = new LineChart<String,Number>(xAxisMonth,yAxisMonth);
-        gastosDiariosYearCB = new ChoiceBox<String>();
-        gastosDiariosMonthCB = new ChoiceBox<String>();
-        gastosDiariosDayCB = new ChoiceBox<String>();
+        dayChart = new LineChart<>(xAxisDays, yAxisDays);
+        monthChart = new LineChart<>(xAxisMonth,yAxisMonth);
+        gastosDiariosYearCB = new ChoiceBox<>();
+        gastosDiariosMonthCB = new ChoiceBox<>();
+        gastosDiariosDayCB = new ChoiceBox<>();
         dayChartVisible = false;
         monthChartVisible = false;
         dayCHartFilled = false;
