@@ -4,6 +4,7 @@ import java.io.*;
 import java.sql.ResultSet;
 import java.util.*;
 
+
 public class ReadData {
 
     private Database db = new Database();
@@ -301,7 +302,7 @@ public class ReadData {
         }
 
     }
-    
+
     public Map<Integer,Integer> getSombra(){
         String query = "select hour,count(*) from energy_history where ch1_kw_avg <= 4.83 group by hour;";
         try{
