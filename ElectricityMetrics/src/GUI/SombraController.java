@@ -41,9 +41,9 @@ public class SombraController {
     }
 
     private void initSombraChart() {
-        Map<String,Integer> sombras = rd.getSombra();
-        for(Map.Entry<String,Integer> entry:sombras.entrySet()){
-            sombraSeries.getData().add(new XYChart.Data(entry.getKey(),entry.getValue()));
+        Map<Integer,Integer> sombras = rd.getSombra();
+        for(Map.Entry<Integer,Integer> entry:sombras.entrySet()){
+            sombraSeries.getData().add(new XYChart.Data(entry.getKey().toString(),entry.getValue()));
         }
         sombraChart.getData().add(sombraSeries);
     }
