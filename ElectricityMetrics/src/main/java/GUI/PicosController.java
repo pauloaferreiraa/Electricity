@@ -6,8 +6,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.CategoryAxis;
@@ -15,7 +17,10 @@ import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -107,7 +112,14 @@ public class PicosController {
         double pico_kw = rd.getKwMaximum(year,month,day) - 5;
         Map<String,Double> res = rd.getPicos(date);
         for(Map.Entry<String,Double> entry:res.entrySet()){
-            gastos.getData().add(new XYChart.Data(entry.getKey(),entry.getValue()));
+            final XYChart.Data<Integer, Double> data = new XYChart.Data(entry.getKey().toString(), entry.getValue());
+            data.setNode(
+                    new HoveredThresholdNode(
+                            (Integer.parseInt(entry.getKey()) == 0) ? 0 : (int) round(entry.getValue(), 2),
+                            round(entry.getValue(), 2)
+                    )
+            );
+            gastos.getData().add(data);
             pico.getData().add(new XYChart.Data(entry.getKey(),pico_kw));
         }
         gastos.setName("Gastos em KW");
@@ -141,5 +153,55 @@ public class PicosController {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    class HoveredThresholdNode extends StackPane {
+        HoveredThresholdNode(Integer priorValue, Double value) {
+            setPrefSize(15, 15);
+
+            final Label label = createDataThresholdLabel(priorValue, value);
+
+            setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    getChildren().setAll(label);
+                    setCursor(Cursor.NONE);
+                    toFront();
+                }
+            });
+            setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    getChildren().clear();
+                    setCursor(Cursor.CROSSHAIR);
+                }
+            });
+        }
+
+        private Label createDataThresholdLabel(Integer priorValue, Double value) {
+            final Label label = new Label(value + "");
+            label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
+            label.setStyle("-fx-font-size: 20; -fx-font-weight: bold;");
+
+            if (priorValue == 0) {
+                label.setTextFill(Color.DARKGRAY);
+            } else if (value > priorValue) {
+                label.setTextFill(Color.FORESTGREEN);
+            } else {
+                label.setTextFill(Color.FIREBRICK);
+            }
+
+            label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+            return label;
+        }
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
     }
 }

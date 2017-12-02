@@ -161,12 +161,29 @@ public class GUIController {
     public void applyFilters() {
         Map<String, Double> medias = rd.getMediaDia();
         Map<String, Double> desvio = rd.getDesvioDia();
+        int i = 0;
         for (String s : medias.keySet()) {
-            seriesMeanDays.getData().add(new XYChart.Data(s, medias.get(s)));
+            final XYChart.Data<Integer, Double> data = new XYChart.Data(s, medias.get(s));
+            data.setNode(
+                    new HoveredThresholdNode(
+                            (i == 0) ? 0 : (int) i -1,
+                            round(medias.get(s),2)
+                    )
+            );
+            seriesMeanDays.getData().add(data);
+            i++;
         }
-
+        i = 0;
         for (String st : desvio.keySet()) {
-            seriesStdDevDays.getData().add(new XYChart.Data(st, desvio.get(st)));
+            final XYChart.Data<Integer, Double> data = new XYChart.Data(st, desvio.get(st));
+            data.setNode(
+                    new HoveredThresholdNode(
+                            (i == 0) ? 0 : (int) i -1,
+                            round(desvio.get(st),2)
+                    )
+            );
+            seriesStdDevDays.getData().add(data);
+            i++;
         }
     }
 
@@ -175,12 +192,29 @@ public class GUIController {
         Map<String, Double> desvio = rd.getDesvioDia(year);
         seriesStdDevDays.getData().clear();
         seriesMeanDays.getData().clear();
+        int i = 0;
         for (String s : medias.keySet()) {
-            seriesMeanDays.getData().add(new XYChart.Data(s, medias.get(s)));
+            final XYChart.Data<Integer, Double> data = new XYChart.Data(s, medias.get(s));
+            data.setNode(
+                    new HoveredThresholdNode(
+                            (i == 0) ? 0 : (int) i -1,
+                            round(medias.get(s),2)
+                    )
+            );
+            seriesMeanDays.getData().add(data);
+            i++;
         }
-
+        i = 0;
         for (String st : desvio.keySet()) {
-            seriesStdDevDays.getData().add(new XYChart.Data(st, desvio.get(st)));
+            final XYChart.Data<Integer, Double> data = new XYChart.Data(st, desvio.get(st));
+            data.setNode(
+                    new HoveredThresholdNode(
+                            (i == 0) ? 0 : (int) i -1,
+                            round(desvio.get(st),2)
+                    )
+            );
+            seriesStdDevDays.getData().add(data);
+            i++;
         }
     }
 
@@ -189,12 +223,29 @@ public class GUIController {
         Map<String, Double> desvio = rd.getDesvioDia(year, month);
         seriesStdDevDays.getData().clear();
         seriesMeanDays.getData().clear();
+        int i = 0;
         for (String s : medias.keySet()) {
-            seriesMeanDays.getData().add(new XYChart.Data(s, medias.get(s)));
+            final XYChart.Data<Integer, Double> data = new XYChart.Data(s, medias.get(s));
+            data.setNode(
+                    new HoveredThresholdNode(
+                            (i == 0) ? 0 : (int) i -1,
+                            round(medias.get(s),2)
+                    )
+            );
+            seriesMeanDays.getData().add(data);
+            i++;
         }
-
+        i = 0;
         for (String st : desvio.keySet()) {
-            seriesStdDevDays.getData().add(new XYChart.Data(st, desvio.get(st)));
+            final XYChart.Data<Integer, Double> data = new XYChart.Data(st, desvio.get(st));
+            data.setNode(
+                    new HoveredThresholdNode(
+                            (i == 0) ? 0 : (int) i -1,
+                            round(desvio.get(st),2)
+                    )
+            );
+            seriesStdDevDays.getData().add(data);
+            i++;
         }
     }
 
@@ -203,12 +254,29 @@ public class GUIController {
         Map<String, Double> desvio = rd.getDesvioDia(year, month, day);
         seriesStdDevDays.getData().clear();
         seriesMeanDays.getData().clear();
+        int i = 0;
         for (String s : medias.keySet()) {
-            seriesMeanDays.getData().add(new XYChart.Data(s, medias.get(s)));
+            final XYChart.Data<Integer, Double> data = new XYChart.Data(s, medias.get(s));
+            data.setNode(
+                    new HoveredThresholdNode(
+                            (i == 0) ? 0 : (int) i -1,
+                            round(medias.get(s),2)
+                    )
+            );
+            seriesMeanDays.getData().add(data);
+            i++;
         }
-
+        i = 0;
         for (String st : desvio.keySet()) {
-            seriesStdDevDays.getData().add(new XYChart.Data(st, desvio.get(st)));
+            final XYChart.Data<Integer, Double> data = new XYChart.Data(st, desvio.get(st));
+            data.setNode(
+                    new HoveredThresholdNode(
+                            (i == 0) ? 0 : (int) i -1,
+                            round(desvio.get(st),2)
+                    )
+            );
+            seriesStdDevDays.getData().add(data);
+            i++;
         }
     }
 
@@ -257,12 +325,29 @@ public class GUIController {
         Map<String, Double> medias = rd.getMediaMes();
         Map<String, Double> desvio = rd.getDesvioMes();
         monthChart.setAnimated(false);
+        int i = 0;
         for (String s : medias.keySet()) {
-            seriesMeanMonth.getData().add(new XYChart.Data(s, medias.get(s)));
+            final XYChart.Data<Integer, Double> data = new XYChart.Data(s, medias.get(s));
+            data.setNode(
+                    new HoveredThresholdNode(
+                            (i == 0) ? 0 : (int) i -1,
+                            round(medias.get(s),2)
+                    )
+            );
+            seriesMeanMonth.getData().add(data);
+            i++;
         }
-
+        i= 0;
         for (String st : desvio.keySet()) {
-            seriesStdDevMonth.getData().add(new XYChart.Data(st, desvio.get(st)));
+            final XYChart.Data<Integer, Double> data = new XYChart.Data(st, desvio.get(st));
+            data.setNode(
+                    new HoveredThresholdNode(
+                            (i == 0) ? 0 : (int) i -1,
+                            round(desvio.get(st),2)
+                    )
+            );
+            seriesStdDevMonth.getData().add(data);
+            i++;
         }
         seriesMeanMonth.setName("Média");
         seriesStdDevMonth.setName("Desvio Padrão");
@@ -276,11 +361,27 @@ public class GUIController {
             Map<String, Double> desvio = rd.getDesvioDia();
             int i = 0;
             for (String s : medias.keySet()) {
-                seriesMeanDays.getData().add(new XYChart.Data(s, medias.get(s)));
+                final XYChart.Data<Integer, Double> data = new XYChart.Data(s, medias.get(s));
+                data.setNode(
+                        new HoveredThresholdNode(
+                                (i == 0) ? 0 : (int) i -1,
+                                round(medias.get(s),2)
+                        )
+                );
+                seriesMeanDays.getData().add(data);
+                i++;
             }
-
+            i = 0;
             for (String st : desvio.keySet()) {
-                seriesStdDevDays.getData().add(new XYChart.Data(st, desvio.get(st)));
+                final XYChart.Data<Integer, Double> data = new XYChart.Data(st, desvio.get(st));
+                data.setNode(
+                        new HoveredThresholdNode(
+                                (i == 0) ? 0 : (int) i -1,
+                                round(desvio.get(st),2)
+                        )
+                );
+                seriesStdDevDays.getData().add(data);
+                i++;
             }
             seriesMeanDays.setName("Média");
             seriesStdDevDays.setName("Desvio Padrão");
@@ -335,5 +436,56 @@ public class GUIController {
         stage.setScene(scene);
         stage.show();
     }
+
+    class HoveredThresholdNode extends StackPane {
+        HoveredThresholdNode(Integer priorValue, Double value) {
+            setPrefSize(15, 15);
+
+            final Label label = createDataThresholdLabel(priorValue, value);
+
+            setOnMouseEntered(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    getChildren().setAll(label);
+                    setCursor(Cursor.NONE);
+                    toFront();
+                }
+            });
+            setOnMouseExited(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent mouseEvent) {
+                    getChildren().clear();
+                    setCursor(Cursor.CROSSHAIR);
+                }
+            });
+        }
+
+        private Label createDataThresholdLabel(Integer priorValue, Double value) {
+            final Label label = new Label(value + "");
+            label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
+            label.setStyle("-fx-font-size: 20; -fx-font-weight: bold;");
+
+            if (priorValue == 0) {
+                label.setTextFill(Color.DARKGRAY);
+            } else if (value > priorValue) {
+                label.setTextFill(Color.FORESTGREEN);
+            } else {
+                label.setTextFill(Color.FIREBRICK);
+            }
+
+            label.setMinSize(Label.USE_PREF_SIZE, Label.USE_PREF_SIZE);
+            return label;
+        }
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
+
 }
 

@@ -110,13 +110,29 @@ public class SombraController {
         double sombra_kw = 4.81;
         Map<String,Double> res = rd.getSombra(date);
         for(Map.Entry<String,Double> entry:res.entrySet()){
-            gastos.getData().add(new XYChart.Data(entry.getKey(),entry.getValue()));
+            final XYChart.Data<Integer, Double> data = new XYChart.Data(entry.getKey().toString(), entry.getValue());
+            data.setNode(
+                    new HoveredThresholdNode(
+                            (Integer.parseInt(entry.getKey()) == 0) ? 0 : (int) round(entry.getValue(), 2),
+                            round(entry.getValue(), 2)
+                    )
+            );
+            gastos.getData().add(data);
             sombra.getData().add(new XYChart.Data(entry.getKey(),sombra_kw));
         }
         gastos.setName("Gastos em KW");
         sombra.setName("Sombra");
         sombraChart.setAnimated(false);
 
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
     }
 
     private void fillDayCB(String year, String month) {
@@ -147,7 +163,7 @@ public class SombraController {
     }
 
     class HoveredThresholdNode extends StackPane {
-        HoveredThresholdNode(Integer priorValue, Integer value) {
+        HoveredThresholdNode(Integer priorValue, Double value) {
             setPrefSize(15, 15);
 
             final Label label = createDataThresholdLabel(priorValue, value);
@@ -169,7 +185,7 @@ public class SombraController {
             });
         }
 
-        private Label createDataThresholdLabel(Integer priorValue, Integer value) {
+        private Label createDataThresholdLabel(Integer priorValue, Double value) {
             final Label label = new Label(value + "");
             label.getStyleClass().addAll("default-color0", "chart-line-symbol", "chart-series-line");
             label.setStyle("-fx-font-size: 20; -fx-font-weight: bold;");
