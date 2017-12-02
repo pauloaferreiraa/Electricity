@@ -274,7 +274,7 @@ public class ReadData {
     }
 
     public Map<String,Integer> getSombra(){
-        String query = "select hour,count(*) from energy_history where ch1_kw_avg = 2.415 group by hour;";
+        String query = "select hour,count(*) from energy_history where ch1_kw_avg <= 2.415 group by hour;";
 
         try{
             ResultSet rs = db.getData(query);
