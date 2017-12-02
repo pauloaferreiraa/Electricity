@@ -12,9 +12,9 @@ public class ReadData {
     Map<String, Double> desvioDia = new TreeMap<String, Double>(new ComparadorData());
     Map<String, Double> mediaMes = new TreeMap<String, Double>(new ComparadorMes());
     Map<String, Double> desvioMes = new TreeMap<String, Double>(new ComparadorMes());
-    Map<Integer, Integer> sombra = new TreeMap<Integer, Integer>();
+    Map<String, Double> sombra = new TreeMap<String, Double>();
     Map<String, Double> picos = new TreeMap<String, Double>();
-
+    private final int PICOS = 0, SOMBRA = 1;
 
     public ReadData() {
         db = new Database();
@@ -185,21 +185,6 @@ public class ReadData {
     }
 
 
-   /* public void CalcDesvioDia(){
-        String query = "select year,month,day,AVG((ch1_kw_avg - sub.a) * (ch1_kw_avg  - sub.a)) as var from energy_history , " +
-                " (SELECT AVG(ch1_kw_avg) AS a FROM energy_history) AS sub group by month,year,day;";
-        try{
-            ResultSet rs = db.getData(query);
-            while (rs.next()) {
-                String date = rs.getString(1) + "/" + rs.getString(2) + "/" + rs.getString(3);
-
-                desvioDia.put(date,Math.sqrt(Double.parseDouble(rs.getString(4))));
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }*/
-
     public void CalcDesvioDia() {
         Map<String, Integer> cont = new HashMap<String, Integer>();
         String query = "select year,month,day,ch1_kw_avg as m from energy_history;";
@@ -241,28 +226,6 @@ public class ReadData {
 
     }
 
-    /*
-        public void CalcDesvioMes(){
-            String query = "select year,month,AVG((ch1_kw_avg - sub.a) * (ch1_kw_avg  - sub.a)) as var from energy_history , (SELECT AVG(ch1_kw_avg) AS a FROM energy_history) AS sub group by month,year;";
-
-            try{
-                ResultSet rs = db.getData(query);
-                while (rs.next()) {
-                    String date = rs.getString(1) + "/" + rs.getString(2);
-
-                    if(!desvioMes.containsKey(date)){
-                        desvioMes.put(date, Math.sqrt(Double.parseDouble(rs.getString(3))));
-                    }else{
-                        desvioMes.put(date,Math.sqrt(Double.parseDouble(rs.getString(3))));
-                    }
-
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-            }
-
-        }
-    */
     public void CalcDesvioMes() {
         Map<String, Integer> cont = new HashMap<String, Integer>();
         String query = "select year,month,day,ch1_kw_avg as m from energy_history;";
@@ -301,18 +264,34 @@ public class ReadData {
 
     }
 
-    public Map<Integer, Integer> getSombra() {
-        String query = "select hour,count(*) from energy_history where ch1_kw_avg <= 4.83 group by hour;";
-        try {
-            ResultSet rs = db.getData(query);
-            while (rs.next()) {
-                sombra.put(rs.getInt(1), rs.getInt(2));
+    public Map<String, Double> getSombra(String date) {
+        Map<String, Double> res = new TreeMap<String, Double>(new Comparator<String>() {
+            public int compare(String o1, String o2) {
+                int ret = -1;
+                if (Integer.parseInt(o1) < Integer.parseInt(o2)) {
+                    ret = -1;
+                } else {
+                    if (Integer.parseInt(o1) > Integer.parseInt(o2)) {
+                        ret = 1;
+                    } else {
+                        ret = 0;
+                    }
+                }
+                return ret;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            return sombra;
+        });
+
+        if (sombra.size() == 0) {
+            fillPicosSombra(SOMBRA);
         }
+
+        for (Map.Entry<String, Double> entry : sombra.entrySet()) {
+            if (entry.getKey().contains(date)) {
+                String[] spl = entry.getKey().split("[.]");
+                res.put(spl[1], entry.getValue());
+            }
+        }
+        return res;
     }
 
     public Map<String, Double> getPicos(String date) {
@@ -333,7 +312,7 @@ public class ReadData {
         });
 
         if (picos.size() == 0) {
-            fillPicos();
+            fillPicosSombra(PICOS);
         }
 
         for (Map.Entry<String, Double> entry : picos.entrySet()) {
@@ -345,19 +324,32 @@ public class ReadData {
         return res;
     }
 
-    public void fillPicos() {
+    public void fillPicosSombra(int m) {
         String query = "select year,month,day, hour, avg(ch1_kw_avg) from energy_history group by year,month,day, hour;";
 
         try {
             ResultSet rs = db.getData(query);
-            while (rs.next()) {
-                String date = rs.getString(1) + "/" + rs.getString(2) + "/" + rs.getString(3) + "." + rs.getString(4);
-                picos.put(date, rs.getDouble(5));
+            if (m == PICOS) {
+                while (rs.next()) {
+                    String date = rs.getString(1) + "/" + rs.getString(2) + "/" + rs.getString(3) + "." + rs.getString(4);
+
+                    picos.put(date, rs.getDouble(5));
+                }
+            }else{
+                if(m == SOMBRA){
+                    while (rs.next()) {
+                        String date = rs.getString(1) + "/" + rs.getString(2) + "/" + rs.getString(3) + "." + rs.getString(4);
+
+                        sombra.put(date, rs.getDouble(5));
+                    }
+                }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     public Double getKwMaximum(String year, String month, String day) {
         String query = "select year,month,day, hour, avg(ch1_kw_avg) as media from energy_history where year = " +
@@ -370,12 +362,30 @@ public class ReadData {
             while (rs.next()) {
                 max = rs.getDouble(5);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             return max;
         }
 
+    }
+
+    public Double getKwMinimum(String year, String month, String day) {
+        String query = "select year,month,day, hour, avg(ch1_kw_avg) as media from energy_history where year = " +
+                year + " and month = " + month + " and day = " + day + " group by year,month,day,hour order by media asc;";
+
+        double max = 0;
+
+        ResultSet rs = db.getData(query);
+        try {
+            while (rs.next()) {
+                max = rs.getDouble(5);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            return max;
+        }
     }
 
 
