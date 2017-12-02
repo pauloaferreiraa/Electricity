@@ -311,7 +311,7 @@ public class GUIController {
     @FXML
     void sombraBtClicked(MouseEvent event) throws Exception{
         Stage stage = Main.stage;
-        Parent root = FXMLLoader.load(getClass().getResource("main/java/GUI/Sombra.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Sombra.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

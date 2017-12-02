@@ -7,14 +7,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.Map;
-
 public class Main extends Application {
 
     private static GUIController controller;
     private static Database db;
     public static Stage stage;
-
     public static void main(String[] args) {
         launch(args);
         ReadData rd = new ReadData();
@@ -44,7 +41,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../GUI/MainWindow.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/MainWindow.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setTitle("Eletricidade");
         primaryStage.setScene(scene);

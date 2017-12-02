@@ -51,7 +51,7 @@ public class SombraController {
     @FXML
     void backBtClicked(MouseEvent event) throws Exception{
         Stage stage = Main.stage;
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/MainWindow.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/MainWindow.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
