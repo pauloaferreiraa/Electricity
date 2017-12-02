@@ -11,7 +11,7 @@
    <children>
       <Button fx:id="backBT" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#backBtClicked" text="Voltar" />
       <Label layoutX="121.0" layoutY="18.0" text="Tarifas de Sombra ao longo de um dia" />
-      <LineChart fx:id="sombraChart" layoutX="121.0" layoutY="39.0" prefHeight="614.0" prefWidth="704.0">
+      <LineChart fx:id="sombraChart" layoutX="121.0" layoutY="39.0" prefHeight="614.0" prefWidth="704.0" AnchorPane.bottomAnchor="73.0" AnchorPane.leftAnchor="121.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="39.0">
         <xAxis>
           <CategoryAxis side="BOTTOM" />
         </xAxis>

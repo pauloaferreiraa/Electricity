@@ -112,8 +112,6 @@ public class GUIController {
                         applyFilters();
                     }
                 }
-
-
             }
         });
         gastosDiariosMonthCB.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
@@ -318,5 +316,12 @@ public class GUIController {
     }
 
 
+    public void picosBtClicked(MouseEvent mouseEvent) throws Exception{
+        Stage stage = Main.stage;
+        Parent root = FXMLLoader.load(getClass().getResource("/Picos.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }
 
