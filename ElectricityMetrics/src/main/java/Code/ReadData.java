@@ -83,7 +83,7 @@ public class ReadData {
 
     public Map<String, Double> getMediaDia(String year, String month, String day) {
         String date = year + "/" + month + "/" + day;
-        Map<String, Double> res = new TreeMap<>();
+        Map<String, Double> res = new TreeMap<String,Double>();
 
         res.put(date, mediaDia.get(date));
 
@@ -92,7 +92,7 @@ public class ReadData {
 
     public Map<String, Double> getMediaDia(String year, String month) {
         String date = year + "/" + month;
-        Map<String, Double> res = new TreeMap<>();
+        Map<String, Double> res = new TreeMap<String,Double>();
         for (String s : mediaDia.keySet()) {
             if (s.contains(date)) {
                 res.put(s, mediaDia.get(s));
@@ -104,7 +104,7 @@ public class ReadData {
 
     public Map<String, Double> getMediaDia(String year) {
         String date = year;
-        Map<String, Double> res = new TreeMap<>();
+        Map<String, Double> res = new TreeMap<String,Double>();
         for (String s : mediaDia.keySet()) {
             if (s.contains(date)) {
                 res.put(s, mediaDia.get(s));
@@ -123,7 +123,7 @@ public class ReadData {
 
     public Map<String, Double> getDesvioDia(String year, String month, String day) {
         String date = year + "/" + month + "/" + day;
-        Map<String, Double> res = new TreeMap<>();
+        Map<String, Double> res = new TreeMap<String,Double>();
 
         res.put(date, desvioDia.get(date));
 
@@ -132,7 +132,7 @@ public class ReadData {
 
     public Map<String, Double> getDesvioDia(String year) {
         String date = year;
-        Map<String, Double> res = new TreeMap<>();
+        Map<String, Double> res = new TreeMap<String,Double>();
         for (String s : desvioDia.keySet()) {
             if (s.contains(date)) {
                 res.put(s, desvioDia.get(s));
@@ -145,7 +145,7 @@ public class ReadData {
 
     public Map<String, Double> getDesvioDia(String year, String month) {
         String date = year + "/" + month;
-        Map<String, Double> res = new TreeMap<>();
+        Map<String, Double> res = new TreeMap<String,Double>();
         for (String s : desvioDia.keySet()) {
             if (s.contains(date)) {
                 res.put(s, desvioDia.get(s));
