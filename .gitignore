@@ -47,7 +47,15 @@
 **/crashlytics.properties
 **/crashlytics-build.properties
 **/fabric.properties
-<<<<<<< HEAD
+
 Test.csv
-=======
->>>>>>> 5b313dc5f3d422ba4825d8cd074b76cf91bd047a
+
+**/target/
+**/pom.xml.tag
+**/pom.xml.releaseBackup
+**/pom.xml.versionsBackup
+**/pom.xml.next
+**/release.properties
+**/dependency-reduced-pom.xml
+**/buildNumber.properties
+**/.mvn/timing.properties
