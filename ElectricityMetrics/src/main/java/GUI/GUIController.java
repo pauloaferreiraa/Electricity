@@ -37,10 +37,10 @@ public class GUIController {
     private Button monthButton;
 
     @FXML
-    private LineChart<?, ?> dayChart;
+    private LineChart<String, Number> dayChart;
 
     @FXML
-    private LineChart<?, ?> monthChart;
+    private LineChart<String,Number> monthChart;
 
     @FXML
     private Pane daysPane;
@@ -79,11 +79,11 @@ public class GUIController {
         seriesStdDevDays = new XYChart.Series();
         seriesMeanMonth = new XYChart.Series();
         seriesStdDevMonth = new XYChart.Series();
-        dayChart = new LineChart<>(xAxisDays, yAxisDays);
-        monthChart = new LineChart<>(xAxisMonth, yAxisMonth);
-        gastosDiariosYearCB = new ChoiceBox<>();
-        gastosDiariosMonthCB = new ChoiceBox<>();
-        gastosDiariosDayCB = new ChoiceBox<>();
+        dayChart = new LineChart<String,Number>(xAxisDays, yAxisDays);
+        monthChart = new LineChart<String,Number>(xAxisMonth, yAxisMonth);
+        gastosDiariosYearCB = new ChoiceBox<String>();
+        gastosDiariosMonthCB = new ChoiceBox<String>();
+        gastosDiariosDayCB = new ChoiceBox<String>();
         dayChartVisible = false;
         monthChartVisible = false;
         dayCHartFilled = false;
@@ -100,7 +100,6 @@ public class GUIController {
 
         //Adicionar listener aos anos para adicionar novos elementos no mes
         gastosDiariosYearCB.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 if (!(gastosDiariosYearCB.getSelectionModel().isEmpty())) {
                     String year = String.valueOf(gastosDiariosYearCB.getItems().get((Integer) newValue));
@@ -118,7 +117,6 @@ public class GUIController {
             }
         });
         gastosDiariosMonthCB.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 if (!(gastosDiariosYearCB.getSelectionModel().isEmpty() || gastosDiariosMonthCB.getSelectionModel().isEmpty())) {
                     String year = String.valueOf(gastosDiariosYearCB.getSelectionModel().getSelectedItem());
@@ -138,7 +136,6 @@ public class GUIController {
         });
 
         gastosDiariosDayCB.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 
                 if (!gastosDiariosDayCB.getSelectionModel().isEmpty()) {
@@ -314,7 +311,7 @@ public class GUIController {
     @FXML
     void sombraBtClicked(MouseEvent event) throws Exception{
         Stage stage = Main.stage;
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI/Sombra.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("main/java/GUI/Sombra.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

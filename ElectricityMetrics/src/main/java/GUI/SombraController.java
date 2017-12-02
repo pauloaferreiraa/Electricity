@@ -31,7 +31,7 @@ public class SombraController {
         yAxis = new NumberAxis();
         sombraSeries = new XYChart.Series();
         sombraSeries.setName("Tarifa de Sombra");
-        sombraChart = new LineChart<>(xAxis,yAxis);
+        sombraChart = new LineChart<String,Number>(xAxis,yAxis);
 
     }
 
