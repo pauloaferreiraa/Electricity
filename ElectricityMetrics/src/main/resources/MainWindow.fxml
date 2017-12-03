@@ -20,6 +20,7 @@
                   <Button fx:id="monthButton" layoutY="58.0" mnemonicParsing="false" onMouseClicked="#monthButtonClicked" prefHeight="58.0" prefWidth="211.0" text="Gastos Mensais" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="58.0" />
                   <Button fx:id="sombraBT" layoutY="116.0" mnemonicParsing="false" onMouseClicked="#sombraBtClicked" prefHeight="58.0" prefWidth="146.0" text="Tarifas Sombra" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="116.0" />
                   <Button fx:id="picosBT" layoutY="174.0" mnemonicParsing="false" onMouseClicked="#picosBtClicked" prefHeight="58.0" prefWidth="146.0" text="Picos de uso" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="174.0" />
+                  <Button fx:id="forecastBT" layoutX="1.0" layoutY="232.0" mnemonicParsing="false" onMouseClicked="#forecastBtClicked" prefHeight="58.0" prefWidth="146.0" text="Previsão" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="232.0" />
                </children>
             </AnchorPane>
           <AnchorPane>

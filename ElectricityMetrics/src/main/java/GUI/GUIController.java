@@ -487,5 +487,14 @@ public class GUIController {
         return (double) tmp / factor;
     }
 
+    @FXML
+    void forecastBtClicked(MouseEvent event) throws Exception{
+        Stage stage = Main.stage;
+        Parent root = FXMLLoader.load(getClass().getResource("/Forecast.fxml"));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 }
 

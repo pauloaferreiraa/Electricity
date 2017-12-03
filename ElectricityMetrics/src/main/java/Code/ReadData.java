@@ -329,14 +329,14 @@ public class ReadData {
 
         try {
             ResultSet rs = db.getData(query);
-            if (m == PICOS) {
+            if (m == PICOS && picos.size() == 0) {
                 while (rs.next()) {
                     String date = rs.getString(1) + "/" + rs.getString(2) + "/" + rs.getString(3) + "." + rs.getString(4);
 
                     picos.put(date, rs.getDouble(5));
                 }
             }else{
-                if(m == SOMBRA){
+                if(m == SOMBRA && sombra.size() == 0){
                     while (rs.next()) {
                         String date = rs.getString(1) + "/" + rs.getString(2) + "/" + rs.getString(3) + "." + rs.getString(4);
 
@@ -376,7 +376,6 @@ public class ReadData {
         }
         return picos;
     }
-
 
 }
 

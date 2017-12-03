@@ -66,10 +66,7 @@ public class Forecast {
 
 
         return media+(pesoEstacao*media)+(pesoHora*media);
-
     }
-
-
 
     private List<Integer> getMaxValues() {
         List<Integer> res = new ArrayList<Integer>();
