@@ -370,22 +370,11 @@ public class ReadData {
 
     }
 
-    public Double getKwMinimum(String year, String month, String day) {
-        String query = "select year,month,day, hour, avg(ch1_kw_avg) as media from energy_history where year = " +
-                year + " and month = " + month + " and day = " + day + " group by year,month,day,hour order by media asc;";
-
-        double max = 0;
-
-        ResultSet rs = db.getData(query);
-        try {
-            while (rs.next()) {
-                max = rs.getDouble(5);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            return max;
+    public Map<String,Double> getPicos(){
+        if(picos.size()==0){
+            fillPicosSombra(PICOS);
         }
+        return picos;
     }
 
 
