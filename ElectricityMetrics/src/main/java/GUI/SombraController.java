@@ -107,7 +107,7 @@ public class SombraController {
         gastos.getData().clear();
         sombra.getData().clear();
         String date = year + "/" + month + "/" + day;
-        double sombra_kw = 4.81;
+        double sombra_kw = 4.83;
         Map<String,Double> res = rd.getSombra(date);
         for(Map.Entry<String,Double> entry:res.entrySet()){
             final XYChart.Data<Integer, Double> data = new XYChart.Data(entry.getKey().toString(), entry.getValue());
